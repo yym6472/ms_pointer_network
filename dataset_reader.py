@@ -57,6 +57,9 @@ class MSDatasetReader(DatasetReader):
 
         if target is not None:
             # 对target分词、添加START、END
+            assert all(any(tgt_token == src_token for src_token in source1.split(" ")) or
+                       any(tgt_token == src_token for src_token in source2.split(" "))
+                       for tgt_token in target.split(" ")), "target词必须在两个source中出现"
             target_tokens = [Token(token) for token in target.split(" ")]
             target_tokens.insert(0, Token(START_SYMBOL))
             target_tokens.append(Token(END_SYMBOL))
